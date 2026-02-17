@@ -23,7 +23,7 @@ const waitlistSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const Waitlist = mongoose.model("Waitlist", waitlist);
+const Waitlist = mongoose.model("Waitlist", waitlistSchema);
 
 app.post("/api/waitlist", async (req, res) => {
   const { email } = req.body;
