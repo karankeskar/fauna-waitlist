@@ -1,8 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(express.json());
@@ -18,7 +23,7 @@ const waitlistSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const Waitlist = mongoose.model("Waitlist", waitlistSchema);
+const Waitlist = mongoose.model("Waitlist", waitlist);
 
 app.post("/api/waitlist", async (req, res) => {
   const { email } = req.body;
@@ -38,6 +43,14 @@ app.post("/api/waitlist", async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 });
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'dist')));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  base: "/fauna-waitlist/",
+  // base: "/fauna-waitlist/",
   server: {
     proxy: {
       "/api": "http://localhost:3001",
