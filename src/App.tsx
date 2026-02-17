@@ -1,4 +1,4 @@
-import FaunaWaitlist from './faunawaitlist'
+import FaunaWaitlist from './FaunaWaitlist'
 import './App.css'
 
 function App() {
