@@ -97,7 +97,7 @@ export default function FaunaWaitlist() {
     return () => { document.body.style.overflow = ""; };
   }, [galleryOpen, activePhoto]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setForm((f) => ({ ...f, status: "loading", errorMessage: "" }));
     try {
@@ -144,7 +144,7 @@ export default function FaunaWaitlist() {
     >
       {/* Grain overlay */}
       <div
-        className="fixed inset-0 z-[9990] pointer-events-none opacity-[0.04]"
+        className="fixed inset-0 z-9990 pointer-events-none opacity-[0.04]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
           backgroundSize: "160px",
@@ -153,15 +153,15 @@ export default function FaunaWaitlist() {
 
       <div
         ref={dotRef}
-        className="fixed w-2 h-2 bg-[#c9a96e] rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
+        className="fixed w-2 h-2 bg-[#c9a96e] rounded-full pointer-events-none z-9999 -translate-x-1/2 -translate-y-1/2 hidden sm:block"
         style={{ transition: "left 0.05s, top 0.05s" }}
       />
 
-      <nav className="fixed top-0 left-0 right-0 z-[200] flex items-center justify-between px-12 py-7 bg-gradient-to-b from-[rgba(7,11,6,0.95)] to-transparent backdrop-blur-md">
-        <span className="text-2xl tracking-[0.22em] font-light">
+      <nav className="fixed top-0 left-0 right-0 z-200 flex items-center justify-between px-4 sm:px-8 lg:px-12 py-4 sm:py-7 bg-linear-to-b from-[rgba(7,11,6,0.95)] to-transparent backdrop-blur-md">
+        <span className="text-xl sm:text-2xl tracking-[0.22em] font-light">
           F<span className="text-[#c9a96e]">A</span>UNA
         </span>
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-4 sm:gap-8">
           <button
             onClick={() => setGalleryOpen(true)}
             className="text-[0.72rem] tracking-[0.2em] uppercase text-[#7a7670] hover:text-[#c9a96e] transition-colors cursor-none bg-transparent border-none"
@@ -181,7 +181,7 @@ export default function FaunaWaitlist() {
 
       <main
         id="waitlist"
-        className="relative flex-1 flex flex-col items-center justify-center text-center px-6 pt-36 pb-32 overflow-hidden"
+        className="relative flex-1 flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-28 sm:pt-36 pb-20 sm:pb-32 overflow-hidden"
       >
         <div
           className="absolute inset-0 z-0"
@@ -210,9 +210,10 @@ export default function FaunaWaitlist() {
             <em className="text-[#c9a96e] italic" style={{ textShadow: "0 0 30px rgba(201,169,110,0.3), 0 0 60px rgba(201,169,110,0.1)" }}>Wild Speaks</em>
           </h1>
 
-          <p className="text-[#7a7670] italic leading-relaxed mb-16" style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)", animation: "fadeInUp 1s ease-out 0.3s both" }}>
+          <p className="text-[#7a7670] italic leading-relaxed mb-10 sm:mb-16" style={{ fontSize: "clamp(1rem, 2vw, 1.4rem)", animation: "fadeInUp 1s ease-out 0.3s both" }}>
             A home for naturalists, wildlife photographers,
-            <br />
+            <br className="hidden sm:block" />
+            <span className="sm:hidden"> </span>
             and those who still choose the wild.
           </p>
 
@@ -220,7 +221,7 @@ export default function FaunaWaitlist() {
             <>
               <form
                 onSubmit={handleSubmit}
-                className="flex w-full max-w-md mb-4 border border-white/10 overflow-hidden rounded-sm focus-within:border-[#c9a96e]/40 focus-within:shadow-[0_0_20px_rgba(201,169,110,0.08)] transition-all duration-300"
+                className="flex flex-col sm:flex-row w-full max-w-md mb-4 border border-white/10 overflow-hidden rounded-sm focus-within:border-[#c9a96e]/40 focus-within:shadow-[0_0_20px_rgba(201,169,110,0.08)] transition-all duration-300"
               >
                 <input
                   type="email"
@@ -228,13 +229,13 @@ export default function FaunaWaitlist() {
                   placeholder="your@email.com"
                   value={form.email}
                   onChange={(e) => setForm((f) => ({ ...f, email: e.target.value, status: f.status === "error" ? "idle" : f.status, errorMessage: "" }))}
-                  className="flex-1 bg-white/[0.04] border-none outline-none px-5 py-3.5 text-[#ede8df] text-sm placeholder:text-[#7a7670]"
+                  className="flex-1 bg-white/4 border-none outline-none px-5 py-3.5 text-[#ede8df] text-sm placeholder:text-[#7a7670]"
                   style={{ fontFamily: "'DM Sans', sans-serif" }}
                 />
                 <button
                   type="submit"
                   disabled={form.status === "loading"}
-                  className="bg-[#c9a96e] text-[#070b06] px-6 py-3.5 text-[0.78rem] font-semibold tracking-[0.1em] uppercase cursor-none whitespace-nowrap hover:bg-[#d4b880] transition-colors disabled:opacity-60"
+                  className="bg-[#c9a96e] text-[#070b06] px-6 py-3.5 text-[0.78rem] font-semibold tracking-widest uppercase cursor-none whitespace-nowrap hover:bg-[#d4b880] transition-colors disabled:opacity-60"
                   style={{ fontFamily: "'DM Sans', sans-serif" }}
                 >
                   {form.status === "loading" ? "Joining..." : "Join Waitlist"}
@@ -260,23 +261,23 @@ export default function FaunaWaitlist() {
           </p>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 opacity-30">
           <span className="text-[0.6rem] tracking-[0.25em] uppercase text-[#7a7670]" style={{ fontFamily: "'DM Mono', monospace" }}>
             Scroll
           </span>
-          <div className="w-px h-12 bg-gradient-to-b from-[#c9a96e] to-transparent" />
+          <div className="w-px h-12 bg-linear-to-b from-[#c9a96e] to-transparent" />
         </div>
       </main>
 
-      <div className="flex items-center gap-5 px-12 py-2 opacity-20">
+      <div className="flex items-center gap-5 px-4 sm:px-8 lg:px-12 py-2 opacity-20">
         <div className="flex-1 h-px bg-white/20" />
         <span className="text-[#c9a96e] text-[0.6rem] tracking-[0.3em]" style={{ fontFamily: "'DM Mono', monospace" }}>✦ FAUNA ✦</span>
         <div className="flex-1 h-px bg-white/20" />
       </div>
 
-      <section className="w-full max-w-[1200px] mx-auto px-12 py-24">
+      <section className="w-full max-w-300 mx-auto px-4 sm:px-8 lg:px-12 py-12 sm:py-24">
         <p
-          className="text-[0.66rem] tracking-[0.3em] uppercase text-[#c9a96e] mb-14 flex items-center gap-3"
+          className="text-[0.66rem] tracking-[0.3em] uppercase text-[#c9a96e] mb-8 sm:mb-14 flex items-center gap-3"
           style={{ fontFamily: "'DM Mono', monospace" }}
         >
           What awaits
@@ -287,9 +288,9 @@ export default function FaunaWaitlist() {
           {FEATURES.map((f) => (
             <div
               key={f.num}
-              className="bg-[#070b06] p-12 relative overflow-hidden group hover:bg-[#111708] transition-all duration-300 hover:scale-[1.01]"
+              className="bg-[#070b06] p-6 sm:p-12 relative overflow-hidden group hover:bg-[#111708] transition-all duration-300 hover:scale-[1.01]"
             >
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#c9a96e] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-[#c9a96e] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute top-0 left-0 bottom-0 w-px bg-[#c9a96e] opacity-0 group-hover:opacity-40 transition-opacity duration-300" />
 
               <div className="font-light text-[#3e3d3a] opacity-60 mb-5 leading-none transition-opacity duration-300" style={{ fontSize: "3.5rem" }}>
@@ -305,13 +306,13 @@ export default function FaunaWaitlist() {
         </div>
       </section>
 
-      <div className="flex items-center gap-5 px-12 py-2 opacity-20">
+      <div className="flex items-center gap-5 px-4 sm:px-8 lg:px-12 py-2 opacity-20">
         <div className="flex-1 h-px bg-white/20" />
         <span className="text-[#c9a96e] text-[0.6rem] tracking-[0.3em]" style={{ fontFamily: "'DM Mono', monospace" }}>✦</span>
         <div className="flex-1 h-px bg-white/20" />
       </div>
 
-      <section id="gallery" className="w-full max-w-[1400px] mx-auto px-12 py-24 text-center">
+      <section id="gallery" className="w-full max-w-350 mx-auto px-4 sm:px-8 lg:px-12 py-12 sm:py-24 text-center">
         <p
           className="text-[0.72rem] tracking-[0.25em] uppercase text-[#c9a96e] mb-4"
           style={{ fontFamily: "'DM Mono', monospace" }}
@@ -321,11 +322,11 @@ export default function FaunaWaitlist() {
         <h2 className="font-light tracking-tight mb-4" style={{ fontSize: "clamp(2rem, 5vw, 3.2rem)" }}>
           The Wild, Documented
         </h2>
-        <p className="text-base text-[#7a7670] italic mb-16" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+        <p className="text-base text-[#7a7670] italic mb-10 sm:mb-16" style={{ fontFamily: "'DM Sans', sans-serif" }}>
           Every image captured in the field. Every moment earned.
         </p>
 
-        <div className="[columns:3_280px] gap-4 text-left">
+        <div className="columns-[2_160px] sm:columns-[3_280px] gap-4 text-left">
           {PHOTOS.map((photo, i) => (
             <div
               key={i}
@@ -338,7 +339,7 @@ export default function FaunaWaitlist() {
                 loading="eager"
                 className="w-full block brightness-[0.82] saturate-[0.7] transition-all duration-500 group-hover:brightness-100 group-hover:saturate-100 group-hover:scale-[1.04]"
               />
-              <div className="absolute bottom-0 left-0 right-0 px-4 pt-10 pb-4 bg-gradient-to-t from-[rgba(7,11,6,0.9)] to-transparent flex flex-col gap-1 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400">
+              <div className="absolute bottom-0 left-0 right-0 px-4 pt-10 pb-4 bg-linear-to-t from-[rgba(7,11,6,0.9)] to-transparent flex flex-col gap-1 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-400">
                 <span className="text-sm text-[#ede8df] italic">{photo.alt}</span>
                 <span className="text-[0.65rem] text-[#c9a96e] tracking-widest" style={{ fontFamily: "'DM Mono', monospace" }}>◎ {photo.location}</span>
               </div>
@@ -347,15 +348,15 @@ export default function FaunaWaitlist() {
         </div>
       </section>
 
-      <section className="relative w-full bg-[#0c1109] border-t border-b border-white/[0.06] overflow-hidden">
+      <section className="relative w-full bg-[#0c1109] border-t border-b border-white/6 overflow-hidden">
         <div
-          className="absolute top-1/2 -translate-y-1/2 left-0 pointer-events-none select-none"
+          className="absolute top-1/2 -translate-y-1/2 left-0 pointer-events-none select-none hidden sm:block"
           style={{ fontSize: "18vw", color: "rgba(255,255,255,0.015)", fontWeight: 300, whiteSpace: "nowrap" }}
         >
           FAUNA
         </div>
 
-        <div className="relative z-10 max-w-[1200px] mx-auto px-12 py-28 grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+        <div className="relative z-10 max-w-300 mx-auto px-4 sm:px-8 lg:px-12 py-14 sm:py-28 grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-24 items-center">
           <div>
             <p
               className="text-[0.66rem] tracking-[0.3em] uppercase text-[#c9a96e] mb-8 flex items-center gap-3"
@@ -377,14 +378,14 @@ export default function FaunaWaitlist() {
               30% of every premium subscription funds direct conservation programmes across six continents.
             </p>
 
-            <div className="flex gap-12">
+            <div className="flex flex-wrap gap-6 sm:gap-12">
               {[
                 { num: "10k+", label: "Species tracked\nby our community" },
                 { num: "4.2M", label: "Sightings\nsubmitted to GBIF" },
                 { num: "30%", label: "Revenue goes\nto conservation" },
               ].map((s) => (
                 <div key={s.num} className="border-l border-[#c9a96e]/20 pl-5">
-                  <div className="font-light text-[#c9a96e] leading-none mb-1" style={{ fontSize: "3rem" }}>{s.num}</div>
+                  <div className="font-light text-[#c9a96e] leading-none mb-1 text-[2rem] sm:text-[3rem]">{s.num}</div>
                   <div className="text-[0.72rem] text-[#7a7670] leading-relaxed whitespace-pre-line" style={{ fontFamily: "'DM Sans', sans-serif" }}>{s.label}</div>
                 </div>
               ))}
@@ -399,7 +400,7 @@ export default function FaunaWaitlist() {
               Conservation status
               <span className="w-10 h-px bg-[#c9a96e] opacity-40 inline-block" />
             </p>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
                 { status: "CR", statusClass: "bg-[rgba(180,60,60,0.15)] text-[#c06060] border-[rgba(180,60,60,0.25)]", name: "Amur Leopard", sci: "Panthera pardus orientalis" },
                 { status: "EN", statusClass: "bg-[rgba(180,120,40,0.15)] text-[#c0903a] border-[rgba(180,120,40,0.25)]", name: "African Elephant", sci: "Loxodonta africana" },
@@ -426,9 +427,9 @@ export default function FaunaWaitlist() {
         </div>
       </section>
 
-      <footer className="border-t border-white/[0.06] px-12 pt-20 pb-14">
-        <div className="max-w-[1200px] mx-auto">
-          <div className="flex flex-col lg:flex-row justify-between gap-16 mb-20">
+      <footer className="border-t border-white/6 px-4 sm:px-8 lg:px-12 pt-12 sm:pt-20 pb-10 sm:pb-14">
+        <div className="max-w-300 mx-auto">
+          <div className="flex flex-col lg:flex-row justify-between gap-10 sm:gap-16 mb-12 sm:mb-20">
             <div>
               <div className="text-2xl tracking-[0.15em] font-light mb-3">
                 F<span className="text-[#c9a96e]">A</span>UNA
@@ -436,7 +437,7 @@ export default function FaunaWaitlist() {
               <div className="text-sm text-[#7a7670] italic">Where the wild speaks.</div>
             </div>
 
-            <div className="flex gap-16 flex-wrap">
+            <div className="flex gap-8 sm:gap-16 flex-wrap">
               {[
                 { title: "Platform", links: ["Features", "Conservation", "Field Guide", "Species Map"] },
                 { title: "Community", links: ["Naturalists", "Researchers", "Photographers", "Educators"] },
@@ -467,7 +468,7 @@ export default function FaunaWaitlist() {
             </div>
           </div>
 
-          <div className="flex justify-between items-center pt-8 border-t border-white/[0.06] flex-wrap gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center pt-8 border-t border-white/6 gap-4">
             <span className="text-[0.62rem] text-[#3e3d3a] tracking-widest" style={{ fontFamily: "'DM Mono', monospace" }}>
               © 2025 Fauna · All rights reserved
             </span>
@@ -489,12 +490,12 @@ export default function FaunaWaitlist() {
 
       {galleryOpen && (
         <div
-          className="fixed inset-0 bg-[rgba(7,11,6,0.95)] backdrop-blur-sm z-[500] flex flex-col overflow-hidden"
+          className="fixed inset-0 bg-[rgba(7,11,6,0.95)] backdrop-blur-sm z-500 flex flex-col overflow-hidden"
           onClick={() => setGalleryOpen(false)}
         >
           <div className="flex flex-col h-full" onClick={(e) => e.stopPropagation()}>
-            <div className="flex items-center justify-between px-12 py-6 border-b border-white/[0.06] shrink-0">
-              <span className="text-xl tracking-[0.15em] font-light">
+            <div className="flex items-center justify-between px-4 sm:px-8 lg:px-12 py-4 sm:py-6 border-b border-white/6 shrink-0">
+              <span className="text-base sm:text-xl tracking-[0.15em] font-light">
                 F<span className="text-[#c9a96e]">A</span>UNA — Field Gallery
               </span>
               <button
@@ -506,11 +507,11 @@ export default function FaunaWaitlist() {
               </button>
             </div>
 
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-2 p-6 overflow-y-auto flex-1">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-1.5 sm:gap-2 p-4 sm:p-6 overflow-y-auto flex-1">
               {PHOTOS.map((photo, i) => (
                 <div
                   key={i}
-                  className="overflow-hidden aspect-[4/3] cursor-none group rounded-sm"
+                  className="overflow-hidden aspect-4/3 cursor-none group rounded-sm"
                   onClick={() => openPhoto(photo)}
                 >
                   <img
@@ -527,7 +528,7 @@ export default function FaunaWaitlist() {
 
       {activePhoto && (
         <div
-          className="fixed inset-0 bg-[rgba(7,11,6,0.95)] backdrop-blur-md z-[600] flex flex-col items-center justify-center gap-4 cursor-none"
+          className="fixed inset-0 bg-[rgba(7,11,6,0.95)] backdrop-blur-md z-600 flex flex-col items-center justify-center gap-4 cursor-none"
           onClick={() => setActivePhoto(null)}
         >
           <img
@@ -546,9 +547,9 @@ export default function FaunaWaitlist() {
             {PHOTOS.indexOf(activePhoto) + 1} / {PHOTOS.length}
           </span>
 
-          <button onClick={() => setActivePhoto(null)} className="fixed top-6 right-12 text-[#7a7670] hover:text-[#ede8df] transition-colors cursor-none bg-transparent border-none text-base">✕</button>
-          <button onClick={prevPhoto} className="fixed left-8 top-1/2 -translate-y-1/2 text-[#7a7670] hover:text-[#c9a96e] transition-all duration-300 hover:scale-110 cursor-none bg-transparent border-none text-2xl">←</button>
-          <button onClick={nextPhoto} className="fixed right-8 top-1/2 -translate-y-1/2 text-[#7a7670] hover:text-[#c9a96e] transition-all duration-300 hover:scale-110 cursor-none bg-transparent border-none text-2xl">→</button>
+          <button onClick={() => setActivePhoto(null)} className="fixed top-6 right-4 sm:right-12 text-[#7a7670] hover:text-[#ede8df] transition-colors cursor-none bg-transparent border-none text-base">✕</button>
+          <button onClick={prevPhoto} className="fixed left-3 sm:left-8 top-1/2 -translate-y-1/2 text-[#7a7670] hover:text-[#c9a96e] transition-all duration-300 hover:scale-110 cursor-none bg-transparent border-none text-2xl">←</button>
+          <button onClick={nextPhoto} className="fixed right-3 sm:right-8 top-1/2 -translate-y-1/2 text-[#7a7670] hover:text-[#c9a96e] transition-all duration-300 hover:scale-110 cursor-none bg-transparent border-none text-2xl">→</button>
         </div>
       )}
     </div>
